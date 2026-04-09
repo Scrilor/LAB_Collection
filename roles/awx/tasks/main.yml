@@ -2,4 +2,7 @@
 ---
 # tasks file for awx
 - import_tasks: '{{ operation }}.yml'
-  when: operation is not null
+  when:
+    - operation is defined
+    - operation is not none
+    - operation | string | length > 0
