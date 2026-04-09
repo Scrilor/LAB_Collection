@@ -1,0 +1,7 @@
+- name: Display the ansible collections
+  ansible.builtin.command: ansible-galaxy collection list
+  register: collections
+
+- name: Debug
+  ansible.builtin.debug:
+    var: collections.stdout_lines

@@ -1,5 +1,5 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for awx
-- import_tasks: check_ansible_version.yml
-  when: operation == "check_ansible_version"
+- import_tasks: '{{ operation }}.yml'
+  when: operation is not null
