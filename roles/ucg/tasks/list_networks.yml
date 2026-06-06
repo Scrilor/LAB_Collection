@@ -1,0 +1,9 @@
+- name: List Networks
+  ansible.builtin.uri:
+    url: '{{ base_url }}/proxy/network/integration/v1/sites/{{ local_sites.json.data[0].id }}/networks'
+    method: GET
+    headers:
+      Accept: application/json
+      X-API-KEY: '{{ api_key }}'
+    validate_certs: false
+  register: networks
