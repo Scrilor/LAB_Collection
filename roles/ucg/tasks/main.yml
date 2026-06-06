@@ -1,0 +1,8 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for ucg
+- import_tasks: '{{ operation }}.yml'
+  when:
+    - operation is defined
+    - operation is not none
+    - operation | string | length > 0

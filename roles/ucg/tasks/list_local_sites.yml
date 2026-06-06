@@ -1,0 +1,8 @@
+- name: List Local Sites
+  ansible.builtin.uri:
+    uri: '{{ base_url }}/proxy/network/integration/v1/sites'
+    method: GET
+    headers:
+      Accept: application/json
+      X-API-KEY: '{{ api_key }}'
+  register: local_sites

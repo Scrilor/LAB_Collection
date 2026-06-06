@@ -1,3 +1,0 @@
-- name: Display the ansible version
-  ansible.builtin.debug:
-    msg: 'ansible version: {{ ansible_version.full }}'
