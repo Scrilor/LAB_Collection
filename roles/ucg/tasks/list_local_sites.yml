@@ -5,4 +5,5 @@
     headers:
       Accept: application/json
       X-API-KEY: '{{ api_key }}'
+    validate_certs: false
   register: local_sites
