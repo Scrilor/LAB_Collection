@@ -1,0 +1,46 @@
+- name: Get first page
+  ansible.builtin.uri:
+    url: >-
+      {{ base_url }}/proxy/network/integration/v1/sites/{{
+      local_sites.json.data[0].id
+      }}/firewall/policies?offset=0&limit=25
+    method: GET
+    headers:
+      Accept: application/json
+      X-API-KEY: "{{ api_key }}"
+    validate_certs: false
+  register: first_page
+
+- name: Calculate offsets
+  ansible.builtin.set_fact:
+    policy_offsets: >-
+      {{
+        range(
+          0,
+          first_page.json.totalCount,
+          25
+        ) | list
+      }}
+
+- name: Get all pages
+  ansible.builtin.uri:
+    url: >-
+      {{ base_url }}/proxy/network/integration/v1/sites/{{
+      local_sites.json.data[0].id
+      }}/firewall/policies?offset={{ item }}&limit=25
+    method: GET
+    headers:
+      Accept: application/json
+      X-API-KEY: "{{ api_key }}"
+    validate_certs: false
+  loop: "{{ policy_offsets }}"
+  register: firewall_policy_pages
+
+- name: Merge all policies
+  ansible.builtin.set_fact:
+    firewall_policies: >-
+      {{
+        firewall_policy_pages.results
+        | map(attribute='json.data')
+        | flatten
+      }}

@@ -1,0 +1,9 @@
+- name: List Local Sites
+  ansible.builtin.uri:
+    url: '{{ base_url }}/proxy/network/integration/v1/sites/{{ local_sites.json.data[0].id }}/firewall/zones'
+    method: GET
+    headers:
+      Accept: application/json
+      X-API-KEY: '{{ api_key }}'
+    validate_certs: false
+  register: local_sites
