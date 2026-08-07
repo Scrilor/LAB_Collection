@@ -1,9 +1,20 @@
+# - name: List Local Sites
+#   ansible.builtin.uri:
+#     url: '{{ base_url }}/proxy/network/integration/v1/sites'
+#     method: GET
+#     headers:
+#       Accept: application/json
+#       X-API-KEY: '{{ api_key }}'
+#     validate_certs: false
+#   register: local_sites
+
 - name: List Local Sites
-  ansible.builtin.uri:
-    url: '{{ base_url }}/proxy/network/integration/v1/sites'
+  ubiquiti.unifi_api.network:
+    base_url: https://192.168.30.254
+    path: /v1/sites
     method: GET
-    headers:
-      Accept: application/json
-      X-API-KEY: '{{ api_key }}'
-    validate_certs: false
+    token: '{{ api_key }}'  
   register: local_sites
+
+- debug:
+    var: local_sites
